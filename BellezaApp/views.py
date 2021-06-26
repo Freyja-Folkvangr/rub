@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from BellezaApp.models import Pedido, Producto, Productos_con_pedidos, Reserva, Resena, Servicio
 from BellezaApp.forms import resena, pedido, reserva, crea_reserva
 
@@ -20,6 +20,7 @@ def reservaView(request):
 
     if form.is_valid():
         form.save()
+        return redirect('index')
 
     context = {'form': form}
     return render(request, 'BellezaApp/reserva.html', context)
