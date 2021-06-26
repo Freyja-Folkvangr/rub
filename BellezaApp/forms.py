@@ -1,5 +1,5 @@
 from django import forms
-from BellezaApp.models import Servicio
+from BellezaApp.models import Servicio, Reserva
 
 
 # crear clases (formularios) para reseña, pedidos y reserva de hora. Estilo nativo de python
@@ -20,3 +20,8 @@ class pedido(forms.Form):
 class reserva(forms.Form):
     servicio = forms.ChoiceField(choices=[])
     fecha_hora = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'type': 'datetime-local', }))
+
+class crea_reserva(forms.ModelForm):
+    class Meta:
+        model = Reserva
+        fields = ['nombre_cliente', 'servicio', 'fecha_hora']

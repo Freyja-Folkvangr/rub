@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from BellezaApp.models import Pedido, Producto, Productos_con_pedidos, Reserva, Resena, Servicio
-from BellezaApp.forms import resena, pedido, reserva
+from BellezaApp.forms import resena, pedido, reserva, crea_reserva
 
 
 # Create your views here.
@@ -16,7 +16,12 @@ def resenaView(request):
 
 
 def reservaView(request):
-    context = {'form': reserva}
+    form = crea_reserva(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+
+    context = {'form': form}
     return render(request, 'BellezaApp/reserva.html', context)
 
 

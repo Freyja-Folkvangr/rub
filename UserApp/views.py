@@ -10,6 +10,7 @@ def registerView(request):
     form = Registro()
     return render(request, 'UserApp/register.html', {'form': form})
 
+
 def newuser(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -22,17 +23,22 @@ def newuser(request):
 
     return render(request, 'BellezaApp/index.html')
 
+
 def loginView(request):
     form = IniciarSesion()
     return render(request, 'UserApp/login.html', {'form': form})
-#no necesita template
+
+
+# no necesita template
 def auth(request):
     username = request.POST['username']
     password = request.POST['password']
     usuario = authenticate(username=username, password=password)
     login(request, usuario)
     return render(request, 'BellezaApp/index.html')
-#no necesita template
+
+
+# no necesita template
 def logoutView(request):
     logout(request)
     return render(request, 'BellezaApp/index.html')
