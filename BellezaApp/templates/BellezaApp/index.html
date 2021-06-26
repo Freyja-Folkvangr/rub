@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% bootstrap_messages %}
+
+
 <head>
     <meta charset="UTF-8">
     <title>Hola</title>
 </head>
 <body>
-
+<h1>soy el index</h1>
 </body>
+
+{% include 'BellezaApp/footer.html' %}
 </html>

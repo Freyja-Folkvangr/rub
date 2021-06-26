@@ -1,31 +1,41 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from BellezaApp.models import Pedido, Producto, Productos_con_pedidos, Reserva, Resena, Servicio
-from BellezaApp.forms import resena, pedido, reserva
+from BellezaApp.forms import resena, pedido, reserva, crea_reserva
+
 
 # Create your views here.
 
 def index(request):
-    #Productos y/o servicio (como reserva de hora)
+    # Productos y/o servicio (como reserva de hora)
     return render(request, 'BellezaApp/index.html')
 
 
 def resenaView(request):
-    context = {'form':resena}
-    return render(request, 'BellezaApp/resena.html',context)
+    context = {'form': resena}
+    return render(request, 'BellezaApp/resena.html', context)
+
 
 def reservaView(request):
-    context = {'form':reserva}
-    return render(request, 'BellezaApp/reserva.html',context)
+    form = crea_reserva(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('index')
+
+    context = {'form': form}
+    return render(request, 'BellezaApp/reserva.html', context)
+
 
 def reservando(request):
     cliente = request.user.cliente
-    servicio =request.POST['servicio']
+    servicio = request.POST['servicio']
     fecha_hora = request.POST['fecha_hora']
 
-    reserva = Reserva(cliente=cliente, servicio= Reserva.objects.get(id=int(servicio)), fecha_hora=fecha_hora)
+    reserva = Reserva(cliente=cliente, servicio=Reserva.objects.get(id=int(servicio)), fecha_hora=fecha_hora)
 
     reserva.save()
     return index(request)
+
 
 def pedidoView(request):
     context = {'form': pedido}
@@ -33,7 +43,7 @@ def pedidoView(request):
 
 
 def resenacreate(request):
-    texto= request.POST['comentario']
+    texto = request.POST['comentario']
 
 
 def pedidoscreate(request):
